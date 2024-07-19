@@ -370,7 +370,7 @@ goldilocks(("porridge", "Papa")) should be("eating")
 goldilocks(("chair", "Mama")) should be("sitting")
 ```
 
-**Variable Patters**
+**Variable Patterns**
 
 ```scala
 def goldilocks(expr: (String, String)) =
@@ -409,7 +409,7 @@ object BookStore {
 }
 ```
 
-**Sequence Patters**
+**Sequence Patterns**
 ```scala
 val secondElement = List(1, 2, 3) match {
   case x :: xs => xs.head
