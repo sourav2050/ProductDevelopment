@@ -334,4 +334,137 @@ val mySet2 = Set("Wisconsin", "Michigan", "Ohio", "Iowa")
 mySet1.equals(mySet2) should be()
 
 ```
+**Pattern Matching** 
+
+-----
+Scala has a built-in general pattern matching mechanism. Match expression can be seen as a generalization of Java-style switches.
+>> Pattern matching returns something:
+```scala
+val stuff = "blue"
+
+val myStuff = stuff match {
+  case "red" =>
+    println("RED"); 1
+  case "blue" =>
+    println("BLUE"); 2
+  case "green" =>
+    println("GREEN"); 3
+  case _ =>
+    println(stuff); 0 // case _ will trigger if all other cases fail.
+}
+myStuff should be 2
+```
+
+**Wildcard Patterns**
+
+```scala
+def goldilocks(expr: Any) =
+  expr match {
+    case ("porridge", _) => "eating"
+    case ("chair", "Mama") => "sitting"
+    case ("bed", "Baby") => "sleeping"
+    case _ => "what?"
+  }
+
+goldilocks(("porridge", "Papa")) should be("eating")
+goldilocks(("chair", "Mama")) should be("sitting")
+```
+
+**Variable Patters**
+
+```scala
+def goldilocks(expr: (String, String)) =
+  expr match {
+    case ("porridge", bear) =>
+      bear + " said someone's been eating my porridge"
+    case ("chair", bear) => bear + " said someone's been sitting in my chair"
+    case ("bed", bear) => bear + " said someone's been sleeping in my bed"
+    case _ => "what?"
+  }
+
+```
+**Constructor Patterns with case class**
+
+Constructor patterns in Scala are a specific form of pattern matching that allows you to destructure objects created from case classes or classes with a well-defined constructor pattern.
+
+```scala
+case class Person(name: String, age: Int)
+def matchPerson(person: Person): String = person match {
+  case Person("Alice", _) => "Found Alice"
+  case Person(name, age) if age < 18 => s"$name is underage"
+  case Person(name, _) => s"Found $name"
+}
+```
+
+**Constructor Patterns with regular class**
+
+```scala
+class Book(title: String, author: String, year: Int)
+object BookStore {
+  def matchBook(book: Book): String = book match {
+    case b @ Book("Scala Programming", _, _) => s"Found Scala book: $b"
+    case Book(_, _, 2023) => "Book published in 2023"
+    case _ => "Other book"
+  }
+}
+```
+
+**Sequence Patters**
+```scala
+val secondElement = List(1, 2, 3) match {
+  case x :: xs => xs.head
+  case _ => 0
+}
+secondElement should be 2
+
+val secondElement = List(1, 2, 3) match {
+  case x :: y :: xs => y
+  case _ => 0
+}
+secondElement should be 2
+
+val secondElement = List(1) match {
+  case x :: y :: xs => y // only matches a list with two or more items
+  case _ => 0
+}
+secondElement should be 0
+
+val r = List(1, 2, 3) match {
+  case x :: y :: Nil => y // only matches a list with exactly two items
+  case _ => 0
+}
+r should be 0
+
+val r = List(1, 2, 3) match {
+  case x :: y :: z :: tail => tail
+  case _ => 0
+}
+r = List()
+
+
+```
+
+**Variable Binding**
+A pattern with variable binding (via the @sign)
+
+```scala
+case class Person(name: String, age: Int)
+
+val person = Person("Alice", 30)
+
+person match {
+  case p @ Person(name, age) => println(s"Person found: $p")
+  case _ => println("Unknown person")
+}
+Person found: Person(Alice,30)
+```
+**Pattern guards**
+
+
+
+
+
+
+
+
 
