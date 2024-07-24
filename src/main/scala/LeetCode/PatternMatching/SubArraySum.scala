@@ -1,0 +1,37 @@
+package LeetCode.PatternMatching
+
+object SubArraySum extends App {
+
+  var sum = 0
+  var left = 0
+  var minLength = Int.MaxValue
+  def minSubArrayLen(target: Int, numsArr: Array[Int]): Int = {
+    val nums = numsArr.toList
+    nums match {
+      case Nil => minLength
+      case head :: tail =>
+        val totalList = (head :: tail).zipWithIndex
+        totalList.map(x => {
+          sum += x._1
+          while (sum >= target) {
+            minLength = Math.min(minLength, x._2 - left +1)
+            sum -= nums(left)
+            left += 1
+          }
+          minLength
+        })
+        if (minLength == Int.MaxValue) 0 else minLength
+      }
+    }
+//
+//  val target = 7
+//  val nums = Array(2, 3, 1, 2, 4, 3)
+
+//    val target = 4
+//    val nums = List(1,4,4)
+    val target = 11
+    val nums = Array(1,1,1,1,1,1,1,1)
+  println(minSubArrayLen(target, nums))
+
+
+}
